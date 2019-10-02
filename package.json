@@ -1,0 +1,10 @@
+{
+    "name": "firstgame",
+    "version": "1.0.0",
+    "description": "My First Game",
+    "main": "index.html",
+    "author": "RamaKrishna",
+    "dependencies": {
+        "http-server": "^0.11.1"
+    }
+}
