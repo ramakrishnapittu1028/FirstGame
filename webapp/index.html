@@ -37,7 +37,7 @@
     var game = new Phaser.Game(config);
 
     var score = 0;
-    var scoreText;
+    var scoreText, replayText;
 
     function preload() {
       this.load.image('sky', 'assets/sky.png');
@@ -110,6 +110,10 @@
 
       this.physics.add.collider(player, bombs, hitBomb, null, this);
 
+      replayText = this.add.text(350, 300, 'REPLAY', { fontSize: '32px', fill: '#000' });
+
+      upgradeLevel();
+
     }
 
     function update() {
@@ -143,7 +147,13 @@
       scoreText.setText('Score: ' + score);
 
       if (stars.countActive(true) === 0) {
-        stars.children.iterate(function (child) {
+        
+        upgradeLevel();
+      }
+    }
+
+    function upgradeLevel(){
+      stars.children.iterate(function (child) {
 
           child.enableBody(true, child.x, 0, true, true);
 
@@ -155,8 +165,6 @@
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-
-      }
     }
 
     function hitBomb(player, bomb) {
@@ -167,6 +175,18 @@
       player.anims.play('turn');
 
       gameOver = true;
+    }
+
+    function resetGame(){
+      score = 0;
+      scoreText.setText('Score: ' + score);
+      upgradeLevel();
+
+      this.physics.resume();
+      player.setTint();
+      bombs.children.entries.forEach(function(bomb){
+        bomb.disableBody(true, true);
+      });
     }
 
   </script>
