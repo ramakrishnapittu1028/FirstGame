@@ -21,6 +21,7 @@
     };
 
     var game = new Phaser.Game(config);
+    vm.game = game;
 
     var score = 0;
     var scoreText;
